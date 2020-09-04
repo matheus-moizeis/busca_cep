@@ -15,5 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+const register = require('./routes/register')
+app.use('/register', register)
 
 module.exports = app;
