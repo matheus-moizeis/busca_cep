@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default (props) => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+            <nav className="navbar navbar-expand navbar-dark bg-primary">
                 <div className="collapse navbar-collapse justify-content-md-center">
                     <ul className="navbar-nav">
                         <li className="nav-item active">

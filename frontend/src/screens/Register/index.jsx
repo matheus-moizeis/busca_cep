@@ -1,85 +1,89 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Axios from 'axios'
 
-export default (props) => {
+function App(props) {
+
+    const [cep, setCep] = useState()
+    const [rua, setRua] = useState()
+    const [bairro, setBairro] = useState()
+    const [cidade, setCidade] = useState()
+    const [estado, setEstado] = useState()
+
+
+    function searchAdress() {
+           const intCep = parseInt(cep)
+        
+        Axios.get(`htpps://viacep.com.br/ws/${intCep}/json/`)
+        .then((respose) => {
+            setRua(respose.logadouro)
+            setBairro(respose.bairro)
+            setCidade(respose.localidade)
+            setEstado(respose.uf)
+        })
+    }
+
     return (
-        <div className="container">
-
-            <form className="form-horizontal">
+        <div className='container'>
+            <div className="form-horizontal">
                 <legend >Dados Pessoais</legend>
-                <div className="form-group ">
-                    <label className="control-label col-sm-2">Nome:</label>
-                    <div className="col-sm-3">
-                        <input type="text" className="form-control" />
-                    </div>
+                
+                <div className='form-group'>
+                    <label >Nome</label>
+                    <input type="text" className='form-control col-6'  />
                 </div>
 
-
-                <div className="form-group">
-                    <label className="control-label col-sm-2">CPF:</label>
-                    <div className="col-sm-2">
-                        <input type="number" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >CPF</label>
+                    <input type="number" className='form-control col-3'  />
                 </div>
 
-                <legend>Endereço</legend>
+                <hr/>
+                <legend >Endereço</legend>
 
-                <div className="form-group">
-                    <label className="control-label col-sm-2">CEP:</label>
-                    <div className="col-sm-2">
-                        <input type="number" className="form-control" />
-                    </div>
-                    <div className="col-xs12 col-sm-3 col-md-2">
-                        <button className='btn btn-primary'>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                            </svg>
-                        </button>
-                    </div>
+                <div className='form-group'>
+                    <label >Cep</label>
+                    <input type="number" className='form-control col-3' value={cep} onChange={e => setCep(e.target.value)} onBlur={searchAdress} />
                 </div>
 
-
-                <div className="form-group">
-                    <label className="control-label col-sm-2">Rua:</label>
-                    <div className="col-sm-4">
-                        <input type="text" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >Rua</label>
+                    <input type="text" className='form-control col-6' 
+                    value={rua} 
+                    onChange={e => setRua(e.target.value)}  />
                 </div>
 
-                <div className="form-group">
-                    <label className="control-label col-sm-2">Número:</label>
-                    <div className="col-sm-2">
-                        <input type="number" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >Bairro</label>
+                    <input type="text" className='form-control col-4' 
+                    value={bairro} 
+                    onChange={e => setBairro(e.target.value)}  />
                 </div>
 
-                <div className="form-group">
-                    <label className="control-label col-sm-2">Bairro:</label>
-                    <div className="col-sm-3">
-                        <input type="text" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >Número</label>
+                    <input type="number" className='form-control col-3' />
                 </div>
 
-                <div className="form-group">
-                    <label className="control-label col-sm-2">Cidade:</label>
-                    <div className="col-sm-4">
-                        <input type="text" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >Cidade</label>
+                    <input type="text" className='form-control col-6' 
+                    value={cidade} 
+                    onChange={e => setCidade(e.target.value)}  />
                 </div>
 
-                <div className="form-group">
-                    <label className="control-label col-sm-2">Estado:</label>
-                    <div className="col-sm-1">
-                        <input type="txt" className="form-control" />
-                    </div>
+                <div className='form-group'>
+                    <label >Estado</label>
+                    <input type="text" className='form-control col-6' 
+                    value={estado} 
+                    onChange={e => setEstado(e.target.value)}  />
                 </div>
-                <div className="form-group">
-                    <div className="col-sm-offset-2 col-sm-10">
-                        <button type="submit" className="btn btn-primary">Salvar</button>
-                    </div>
-                </div>
-            </form>
+
+                <button className='btn btn-success'>
+                    Salvar
+                </button>
+            </div>
         </div>
     )
 }
 
+export default App
