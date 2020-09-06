@@ -20,4 +20,7 @@ app.use('/', indexRouter);
 const register = require('./routes/register')
 app.use('/register', register)
 
+const cep = require('./routes/cep')
+app.use('/cep', cep)
+
 module.exports = app;
