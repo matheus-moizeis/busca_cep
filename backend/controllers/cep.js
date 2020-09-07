@@ -3,24 +3,19 @@ const cepPromisse = require('cep-promise')
 const controller = {}
 
 controller.get = async (req, res) => {
-    try {
+ 
        const id = req.params.id
        const intCep = parseInt(id)
        
        cepPromisse(intCep)
        .then((response) =>{
+           console.log(response);
            res.json(response)
        })
        .catch((erro)=>{
-           res.json(erro)
-       })
-       
-    }
-    catch(erro) {
-       console.log(erro)
-       res.status(500).send(erro)
-    }
- }
- 
+           console.log('entreis');
+           res.json({name: 'CepPromiseError'})
+       })    
+ } 
  
  module.exports = controller

@@ -10,71 +10,70 @@ function App(props) {
     const [estado, setEstado] = useState()
     const [numero, setNumero] = useState()
 
-    const [nome, setNome] = useState()
-    const [cpf, setCpf] = useState()
 
 
     function searchAdress() {
 
-        const intCep = parseInt(cep)
+        if (cep.length < 8) {
 
-        Axios.get(`http://localhost:3001/cep/${intCep}`)
-            .then((response) => {
-                const listAddress = response.data
+            var newCep = cep.substring() + '0'
 
-                setRua(listAddress.street)
-                setBairro(listAddress.neighborhood)
-                setCidade(listAddress.city)
-                setEstado(listAddress.state)
+            while (newCep.length < 8) {
+
+                newCep = newCep.substring() + '0'
+            }
+
+            setCep(newCep)
+
+            const intCep = parseInt(newCep)
+
+            Axios.get(`http://localhost:3001/cep/${intCep}`)
+                .then((response) => {
+                    const listAddress = response.data
+
+                    setRua(listAddress.street)
+                    setBairro(listAddress.neighborhood)
+                    setCidade(listAddress.city)
+                    setEstado(listAddress.state)
 
 
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
+                })
+                .catch((error) => {
+                    const erro = error.data
+                    alert('CEP invalido' + erro);
+                })
 
 
-    function addAdress(e) {
-        e.preventDefault()
-        const informations ={
-            nome: nome,
-            cpf: cpf,
-            cep: cep,
-            rua: rua,
-            bairro: bairro,
-            numero: numero,
-            cidade: cidade,
-            estado: estado
+        } else {
+            const intCep = parseInt(cep)
+
+            Axios.get(`http://localhost:3001/cep/${intCep}`)
+                .then((response) => {
+                    const listAddress = response.data
+
+                    if (listAddress.name === 'CepPromiseError') {
+                        alert('Cep Inválido')
+                        setCep('')
+                        setRua('')
+                        setBairro('')
+                        setCidade('')
+                        setEstado('')
+                    } else {
+                        setRua(listAddress.street)
+                        setBairro(listAddress.neighborhood)
+                        setCidade(listAddress.city)
+                        setEstado(listAddress.state)
+                    }
+                })
+                .catch(() => {
+                    alert('Cep Inválido');
+                })
         }
-        Axios.post('http://localhost:3001/register', informations)
-        .then(response =>{
-            alert('Cadastrado com sucesso');
-        }).catch(erro =>{
-            alert('Erro ao cadastrar');
-        })
     }
 
     return (
         <div className='container'>
             <div className="form-horizontal">
-                <legend >Dados Pessoais</legend>
-
-                <div className='form-group'>
-                    <label >Nome</label>
-                    <input type="text" value={nome} className='form-control col-6'
-                        onChange={e => setNome(e.target.value)} />
-                </div>
-
-                <div className='form-group'>
-                    <label >CPF</label>
-                    <input type="number" className='form-control col-3'
-                        value={cpf}
-                        onChange={e => setCpf(e.target.value)}
-                    />
-                </div>
-
-                <hr />
                 <legend >Endereço</legend>
 
                 <div className='form-group'>
@@ -118,9 +117,6 @@ function App(props) {
                         onChange={e => setEstado(e.target.value)} />
                 </div>
 
-                <button className='btn btn-success' onClick={addAdress}>
-                    Salvar
-                </button>
             </div>
         </div>
     )

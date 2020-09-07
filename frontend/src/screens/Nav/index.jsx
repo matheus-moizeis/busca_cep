@@ -8,11 +8,7 @@ export default (props) => {
                 <div className="collapse navbar-collapse justify-content-md-center">
                     <ul className="navbar-nav">
                         <li className="nav-item active">
-                            <Link to='/register' className="nav-link"> Cadastros </Link>
-                        </li>
-
-                        <li className="nav-item active">
-                            <Link to='/consult' className="nav-link"> Cadastros </Link>
+                            <Link to='/busca_cep' className="nav-link"> Buscar Cep </Link>
                         </li>
                     </ul>
                 </div>

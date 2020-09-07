@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import Consult from './screens/Consult'
+
 import Register from './screens/Register'
 import Nav from './screens/Nav'
 
@@ -11,13 +11,9 @@ const App = () => {
             <div>
                 <Nav />              
                 <Switch>
-                    <Route path='/register'>
+                    <Route path='/busca_cep'>
                         <Register />
                     </Route>
-                    <Route path='/consult'>
-                        <Consult />
-                    </Route>
-
                 </Switch>
             </div>
         </BrowserRouter>
